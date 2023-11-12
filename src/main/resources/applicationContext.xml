@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="musicPlayer.properties"/>
+
+
+    <bean id="musicBeanClassical" class="org.example.ClassicalMusic"/>
+    <bean id="musicBeanRock" class="org.example.RockMusic"/>
+    <bean id="musicBeanHiphop" class="org.example.HiphopMusic"/>
+    <bean id="genres" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="musicBeanClassical" />
+                <ref bean="musicBeanRock" />
+                <ref bean="musicBeanHiphop" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="musicPlayer"
+          class="org.example.MusicPlayer">
+        <property name="musicList" ref="genres"/>
+        <property name="name" value="${musicPlayer.name}"/>
+        <property name="volume" value="${musicPlayer.volume}"/>
+    </bean>
+</beans>
