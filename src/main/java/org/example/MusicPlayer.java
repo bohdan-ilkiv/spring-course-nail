@@ -2,22 +2,29 @@ package org.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-@Component
-public class MusicPlayer {
-    private Music music1;
-    private Music music2;
+import java.util.Random;
 
-    public MusicPlayer(@Qualifier("rockMusic") Music music1,
-                       @Qualifier("classicalMusic") Music music2) {
-        this.music1 = music1;
-        this.music2 = music2;
+//@Component
+public class MusicPlayer {
+    List<Music> musicList;
+
+    public MusicPlayer(List<Music> musicList) {
+        this.musicList = musicList;
     }
 
+
     public String playMusic(){
-        return "Playing: " + music1.getSong() + ", " + music2.getSong();
+        if(musicList.isEmpty()){
+            return "No songs in this playlist";
+        }
+
+        Random random = new Random();
+        int randomSong = random.nextInt(musicList.size());
+        return "Playing: " + musicList.get(randomSong).getSong();
     }
 }
